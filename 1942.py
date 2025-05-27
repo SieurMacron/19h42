@@ -33,11 +33,11 @@ def heures_qui_atteignent_hauteur(lat, lon, date, hauteur_cible, timezone_str):
     return heures_valides
 
 # --- Interface utilisateur ---
-st.title("À quelle heure le soleil atteint une certaine hauteur ?")
+st.title("Quand est 19h42 ?")
 hauteur_ref = hauteur_soleil_patmos()
-st.markdown(f"🌞 Hauteur de référence (Patmos, 1er août à 19h42) : **{hauteur_ref:.2f}°**")
+st.markdown("🌞🌞🌞🌞🌞🌞🌞🌞🌞🌞🌞🌞🌞🌞🌞🌞🌞🌞")
 
-st.markdown("### 🌍 Sélectionnez un lieu sur la carte")
+st.markdown("### Sélectionnez un lieu sur la carte")
 
 # Crée une carte avec pop-up lat/lon au clic
 m = folium.Map(location=[48.85, 2.35], zoom_start=3)
