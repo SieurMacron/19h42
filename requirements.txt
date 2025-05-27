@@ -4,3 +4,5 @@ folium
 pytz
 timezonefinder
 astral
+streamlit-js-eval
+geopy
