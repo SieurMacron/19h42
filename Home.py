@@ -7,13 +7,16 @@ from timezonefinder import TimezoneFinder
 st.set_page_config(page_title="Sélection du lieu", layout="wide")
 st.title("🌍 Sélectionnez un lieu sur la carte")
 
-# Container carte + bouton
-with st.container():
+# Création de deux colonnes : carte à gauche, bouton + infos à droite
+col1, col2 = st.columns([3, 1])  # 3/4 largeur pour la carte, 1/4 pour le bouton
+
+with col1:
     m = Map(location=[45, 0], zoom_start=3)
     MousePosition().add_to(m)
 
-    map_data = streamlit_folium.st_folium(m, width=900, height=450)
+    map_data = streamlit_folium.st_folium(m, width=700, height=450)
 
+with col2:
     clicked_latlon = map_data.get("last_clicked")
 
     if clicked_latlon:
@@ -28,7 +31,8 @@ with st.container():
             st.session_state.timezone = tz or "UTC"
             st.session_state.confirmed_location = True
             st.success(f"Lieu confirmé ! Fuseau horaire : {tz}")
+    else:
+        st.info("Cliquez sur la carte pour sélectionner un lieu.")
 
-# Plus de lien pour aller à Date
 if not st.session_state.get("confirmed_location", False):
     st.info("Veuillez sélectionner un lieu sur la carte et confirmer.")
