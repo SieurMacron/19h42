@@ -16,13 +16,13 @@ if clicked_latlon:
     lat, lon = clicked_latlon["lat"], clicked_latlon["lng"]
     st.write(f"📍 Coordonnées sélectionnées : {lat:.4f}, {lon:.4f}")
 
-    if st.button("✅ Confirmer ce lieu"):
-        tf = TimezoneFinder()
-        tz = tf.timezone_at(lat=lat, lng=lon) or "UTC"
-        st.session_state.lat = lat
-        st.session_state.lon = lon
-        st.session_state.timezone = tz
-        st.session_state.confirmed_location = True
-        st.success(f"Lieu confirmé ! Fuseau horaire : {tz}")
-        st.session_state.page = "Date"
-        st.experimental_rerun()
+        if st.button("✅ Confirmer ce lieu"):
+            tf = TimezoneFinder()
+            tz = tf.timezone_at(lat=lat, lng=lon)
+            st.session_state.lat = lat
+            st.session_state.lon = lon
+            st.session_state.timezone = tz or "UTC"
+            st.session_state.confirmed_location = True
+            st.success(f"Lieu confirmé ! Fuseau horaire : {tz}")
+            st.experimental_rerun()
+
