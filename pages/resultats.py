@@ -4,16 +4,12 @@ from astral import LocationInfo
 from astral.sun import elevation
 import pytz
 
-st.set_page_config(page_title="Résultat", layout="centered")
 st.title("🌞 Heure où le soleil atteint une hauteur spécifique")
 
-# Vérification des données nécessaires
 if not (st.session_state.get("confirmed_location") and st.session_state.get("confirmed_date")):
     st.warning("Lieu et date doivent être confirmés avant d'accéder à cette page.")
-    st.page_link("Home", label="⬅️ Revenir à la sélection du lieu")
     st.stop()
 
-# Hauteur du soleil à Patmos le 1er août à 19h42
 def hauteur_soleil_patmos():
     patmos = LocationInfo("Patmos", "Greece", "Europe/Athens", 37.3236, 26.5401)
     tz = pytz.timezone(patmos.timezone)
@@ -21,9 +17,6 @@ def hauteur_soleil_patmos():
     dt = tz.localize(dt_naif)
     return elevation(patmos.observer, dt)
 
-hauteur_ref = hauteur_soleil_patmos()
-
-# Recherche des heures où le soleil atteint cette hauteur
 def heure_qui_atteint_hauteur(lat, lon, date, hauteur_cible, timezone_str):
     loc = LocationInfo(latitude=lat, longitude=lon, timezone=timezone_str)
     tz = pytz.timezone(timezone_str)
@@ -41,7 +34,8 @@ def heure_qui_atteint_hauteur(lat, lon, date, hauteur_cible, timezone_str):
 
     return heures_valides
 
-# Récupération des données depuis la session
+hauteur_ref = hauteur_soleil_patmos()
+
 lat = st.session_state.lat
 lon = st.session_state.lon
 timezone = st.session_state.timezone
@@ -49,7 +43,6 @@ date_val = st.session_state.date
 
 heures = heure_qui_atteint_hauteur(lat, lon, date_val, hauteur_ref, timezone)
 
-# Affichage du résultat
 if not heures:
     st.error("❌ À cette date et à ce lieu, le soleil ne monte pas assez haut dans le ciel.")
 else:
