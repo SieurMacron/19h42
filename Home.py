@@ -33,7 +33,7 @@ with col2:
             st.session_state.lon = lon
             st.session_state.timezone = tz or "UTC"
             st.session_state.confirmed_location = True
-            st.success(f"Lieu confirmé ! Fuseau horaire : {tz}")
+            st.success(f"Lieu confirmé ! Fuseau horaire : {tz}. Selectionnez maintenant l'onglet Date !")
     else:
         st.info("Cliquez sur la carte pour sélectionner un lieu.")
 
