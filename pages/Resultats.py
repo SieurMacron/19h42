@@ -5,7 +5,7 @@ from astral.sun import elevation
 import pytz
 
 st.set_page_config(page_title="Résultat", layout="centered")
-st.title("🌞 Heure où le soleil atteint une hauteur spécifique")
+st.title("🌞 La belle lumière de 19h42 sera atteinte...🌞")
 
 # Vérification des données nécessaires
 if not (st.session_state.get("confirmed_location") and st.session_state.get("confirmed_date")):
@@ -55,5 +55,5 @@ else:
     matin = min(heures)
     soir = max(heures)
     st.success(f"🎯 Hauteur de référence : {hauteur_ref:.2f}°")
-    st.info(f"🕗 Heure du matin : **{matin.strftime('%H:%M')}**")
-    st.info(f"🌇 Heure du soir : **{soir.strftime('%H:%M')}**")
+    st.info(f"🕗 Le matin, à**{matin.strftime('%H:%M')}**")
+    st.info(f"🌇 Le soir, à**{soir.strftime('%H:%M')}**")
