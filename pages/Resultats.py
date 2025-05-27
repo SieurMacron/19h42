@@ -52,6 +52,5 @@ if not heures:
 else:
     matin = min(heures)
     soir = max(heures)
-    st.success(f"Hauteur du soleil de référence : {hauteur_ref:.2f}°")
-    st.info(f"🕗 Heure du matin : {matin.strftime('%H:%M')}")
-    st.info(f"🌇 Heure du soir : {soir.strftime('%H:%M')}")
+    st.info(f"Le matin, à {matin.strftime('%H:%M')}")
+    st.info(f"Le soir, à {soir.strftime('%H:%M')}")
