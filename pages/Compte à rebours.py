@@ -9,52 +9,51 @@ import time
 import json
 
 st.set_page_config(page_title="Compte à rebours solaire", layout="centered")
-st.title(" Compte à rebours jusqu'au prochain 19h42")
+st.title("📍 Compte à rebours basé sur votre position")
 
-# 1. Récupération des coordonnées via navigateur
-st.markdown("#### Autorisez le navigateur à accéder à votre position pour continuer.")
+# Étape 1 – Bouton pour déclencher la géolocalisation
+if "geoloc_triggered" not in st.session_state:
+    st.session_state.geoloc_triggered = False
 
-# Insertion d’un composant HTML + JS
-get_position_code = """
-<script>
-navigator.geolocation.getCurrentPosition(
-  (pos) => {
-    const coords = {
-      lat: pos.coords.latitude,
-      lon: pos.coords.longitude
-    };
-    window.parent.postMessage(JSON.stringify(coords), "*");
-  },
-  (err) => {
-    const error = { error: err.message };
-    window.parent.postMessage(JSON.stringify(error), "*");
-  }
-);
-</script>
-"""
+if not st.session_state.geoloc_triggered:
+    if st.button("📍 Utiliser ma position actuelle"):
+        st.session_state.geoloc_triggered = True
+        html("""
+        <script>
+        navigator.geolocation.getCurrentPosition(
+            (pos) => {
+                const coords = {
+                    lat: pos.coords.latitude,
+                    lon: pos.coords.longitude
+                };
+                window.parent.postMessage(JSON.stringify(coords), "*");
+            },
+            (err) => {
+                const error = { error: err.message };
+                window.parent.postMessage(JSON.stringify(error), "*");
+            }
+        );
+        </script>
+        """, height=0)
+        html("""
+        <script>
+        window.addEventListener("message", (event) => {
+            const data = JSON.stringify(event.data);
+            const url = new URL(window.location.href);
+            url.searchParams.set("location_data", data);
+            window.location.href = url.href;
+        });
+        </script>
+        """, height=0)
+        st.stop()
 
-position = st.empty()
-html(get_position_code, height=0)
-
-# 2. Traitement du message
+# Étape 2 – Récupération des données de position
 location_data = st.query_params.get("location_data")
-
-
 if not location_data:
-    # Écoute du message postMessage via JS
-    html("""
-    <script>
-    window.addEventListener("message", (event) => {
-      const data = JSON.stringify(event.data);
-      const url = new URL(window.location.href);
-      url.searchParams.set("location_data", data);
-      window.location.href = url.href;
-    });
-    </script>
-    """, height=0)
+    st.info("Cliquez sur le bouton pour autoriser la géolocalisation.")
     st.stop()
 
-# 3. Chargement et vérification
+# Étape 3 – Traitement
 try:
     data = json.loads(location_data[0].replace("'", '"'))
     if "error" in data:
@@ -63,17 +62,17 @@ try:
     lat, lon = data["lat"], data["lon"]
     st.success(f"📍 Position détectée : {lat:.4f}, {lon:.4f}")
 except Exception as e:
-    st.error(f"Erreur de traitement des données de localisation : {e}")
+    st.error(f"Erreur de traitement : {e}")
     st.stop()
 
-# 4. Fuseau horaire
+# Fuseau horaire
 tf = TimezoneFinder()
 timezone = tf.timezone_at(lat=lat, lng=lon)
 if not timezone:
     st.error("Impossible de déterminer le fuseau horaire.")
     st.stop()
 
-# 5. Hauteur de référence
+# Hauteur de référence
 def hauteur_reference_patmos():
     patmos = LocationInfo("Patmos", "Greece", "Europe/Athens", 37.3236, 26.5401)
     tz = pytz.timezone(patmos.timezone)
@@ -82,7 +81,7 @@ def hauteur_reference_patmos():
 
 hauteur_ref = hauteur_reference_patmos()
 
-# 6. Recherche des moments dans la journée
+# Recherche des heures valides
 def heures_hauteur_aujourdhui(lat, lon, timezone_str, hauteur_cible):
     loc = LocationInfo(latitude=lat, longitude=lon, timezone=timezone_str)
     tz = pytz.timezone(timezone_str)
@@ -105,10 +104,10 @@ now = datetime.now(pytz.timezone(timezone))
 prochaine_heure = next((h for h in heures if h > now), None)
 
 if not prochaine_heure:
-    st.error("☁️ Le soleil n'atteint pas cette hauteur aujourd’hui à votre position.")
+    st.error("☁️ Le soleil n'atteint pas cette hauteur aujourd’hui.")
     st.stop()
 
-# 7. Compte à rebours
+# Compte à rebours
 st.success(f"🎯 Hauteur solaire cible : {hauteur_ref:.2f}°")
 st.info(f"🕒 Prochaine occurrence : {prochaine_heure.strftime('%H:%M:%S')} ({timezone})")
 
