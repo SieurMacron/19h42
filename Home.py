@@ -10,9 +10,6 @@ import time
 
 st.set_page_config(page_title="Sélection du lieu", layout="wide")
 st.title("🌍 Sélectionnez un lieu sur la carte")
-with st.spinner('Chargement du site, patience... 🌅'):
-    time.sleep(2)  # simule un chargement
-
 # Création de deux colonnes : carte à gauche, bouton + infos à droite
 col1, col2 = st.columns([3, 1])  # 3/4 largeur pour la carte, 1/4 pour le bouton
 
