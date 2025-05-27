@@ -16,7 +16,7 @@ if not (st.session_state.get("confirmed_location") and st.session_state.get("con
 def hauteur_soleil_patmos():
     patmos = LocationInfo("Patmos", "Greece", "Europe/Athens", 37.3236, 26.5401)
     tz = pytz.timezone(patmos.timezone)
-    dt_naif = datetime(2023, 8, 1, 19, 42)
+    dt_naif = datetime(2021, 6, 28, 19, 42)
     dt = tz.localize(dt_naif)
     return elevation(patmos.observer, dt)
 
