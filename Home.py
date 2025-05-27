@@ -5,7 +5,7 @@ from folium.plugins import MousePosition
 from timezonefinder import TimezoneFinder
 
 st.set_page_config(page_title="Sélection du lieu", layout="wide")
-st.title("🌍 Sélectionnez un lieu sur la carte")
+st.title("🌍 D'où voulez vous voir la belle lumière de 19h42 ?")
 
 # Crée une carte centrée sur l'Europe
 m = Map(location=[45, 0], zoom_start=3)
