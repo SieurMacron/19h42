@@ -7,12 +7,13 @@ import pytz
 st.set_page_config(page_title="Résultat", layout="centered")
 st.title("🌞 Heure où le soleil atteint une hauteur spécifique")
 
+# Vérification des données nécessaires
 if not (st.session_state.get("confirmed_location") and st.session_state.get("confirmed_date")):
     st.warning("Lieu et date doivent être confirmés avant d'accéder à cette page.")
-    st.page_link("Home", label="⬅️ Revenir au début")
+    st.page_link("Home", label="⬅️ Revenir à la sélection du lieu")
     st.stop()
 
-# Étape 1 : calculer la hauteur du soleil à Patmos le 1er août à 19h42
+# Hauteur du soleil à Patmos le 1er août à 19h42
 def hauteur_soleil_patmos():
     patmos = LocationInfo("Patmos", "Greece", "Europe/Athens", 37.3236, 26.5401)
     tz = pytz.timezone(patmos.timezone)
@@ -22,13 +23,13 @@ def hauteur_soleil_patmos():
 
 hauteur_ref = hauteur_soleil_patmos()
 
-# Étape 2 : recherche de l’heure correspondante dans le lieu sélectionné
+# Recherche des heures où le soleil atteint cette hauteur
 def heure_qui_atteint_hauteur(lat, lon, date, hauteur_cible, timezone_str):
     loc = LocationInfo(latitude=lat, longitude=lon, timezone=timezone_str)
     tz = pytz.timezone(timezone_str)
     dt_start = tz.localize(datetime(date.year, date.month, date.day, 0, 0))
     dt_end = dt_start + timedelta(days=1)
-    
+
     heures_valides = []
     dt = dt_start
     delta = timedelta(minutes=1)
@@ -40,6 +41,7 @@ def heure_qui_atteint_hauteur(lat, lon, date, hauteur_cible, timezone_str):
 
     return heures_valides
 
+# Récupération des données depuis la session
 lat = st.session_state.lat
 lon = st.session_state.lon
 timezone = st.session_state.timezone
@@ -47,11 +49,12 @@ date_val = st.session_state.date
 
 heures = heure_qui_atteint_hauteur(lat, lon, date_val, hauteur_ref, timezone)
 
+# Affichage du résultat
 if not heures:
     st.error("❌ À cette date et à ce lieu, le soleil ne monte pas assez haut dans le ciel.")
 else:
     matin = min(heures)
     soir = max(heures)
-    st.success(f"Hauteur du soleil de référence : {hauteur_ref:.2f}°")
-    st.info(f"🕗 Heure du matin : {matin.strftime('%H:%M')}")
-    st.info(f"🌇 Heure du soir : {soir.strftime('%H:%M')}")
+    st.success(f"🎯 Hauteur de référence : {hauteur_ref:.2f}°")
+    st.info(f"🕗 Heure du matin : **{matin.strftime('%H:%M')}**")
+    st.info(f"🌇 Heure du soir : **{soir.strftime('%H:%M')}**")
