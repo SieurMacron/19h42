@@ -19,7 +19,6 @@ if st.button("✅ Confirmer la date"):
     st.session_state.confirmed_date = True
     st.success(f"Date confirmée : {selected_date}")
 
-if st.session_state.get("confirmed_date", False):
-    st.markdown("[➡️ Voir le résultat](./Resultats)")
-else:
+# Plus de lien vers Resultats
+if not st.session_state.get("confirmed_date", False):
     st.info("Veuillez sélectionner une date et confirmer.")
