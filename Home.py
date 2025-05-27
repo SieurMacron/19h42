@@ -31,4 +31,5 @@ if clicked_latlon:
         st.session_state.timezone = tz or "UTC"
         st.session_state.confirmed_location = True
         st.success(f"Lieu confirmé ! Fuseau horaire : {tz}")
-        st.page_link("Date", label="➡️ Aller à la sélection de la date", icon="📅")
+        st.page_link("pages/Date.py", label="➡️ Aller à la sélection de la date", icon="📅")
+
