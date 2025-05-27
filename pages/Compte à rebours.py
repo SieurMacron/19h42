@@ -9,7 +9,7 @@ import time
 import json
 
 st.set_page_config(page_title="Compte à rebours solaire", layout="centered")
-st.title("📍 Compte à rebours basé sur votre position actuelle")
+st.title(" Compte à rebours jusqu'au prochain 19h42")
 
 # 1. Récupération des coordonnées via navigateur
 st.markdown("#### Autorisez le navigateur à accéder à votre position pour continuer.")
