@@ -77,8 +77,6 @@ if all(k in st.session_state for k in ("lat", "lon", "tz")):
     if not prochaine_heure:
         st.error("☁️ Le soleil n'atteint pas cette hauteur aujourd’hui.")
         st.stop()
-
-    st.success(f"🎯 Hauteur de référence : {hauteur_ref:.2f}°")
     st.info(f"🕒 Prochaine occurrence : {prochaine_heure.strftime('%H:%M:%S')} ({tz})")
 
     countdown = st.empty()
