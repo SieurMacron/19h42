@@ -25,7 +25,7 @@ if st.button("✅ Confirmer la date"):
     st.session_state.selected_date = selected_date
     st.session_state.confirmed_date = True
     # Affichage au format jour/mois/année
-    st.success(f"Date confirmée : {selected_date.strftime('%d/%m/%Y')}")
+    st.success(f"Date confirmée : {selected_date.strftime('%d/%m/%Y')}. \n Vous pouvez maintenant voir les résultats dans l'onglet Résultats")
 
 if not st.session_state.get("confirmed_date", False):
     st.info("Veuillez sélectionner une date et confirmer.")
