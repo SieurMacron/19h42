@@ -6,7 +6,7 @@ from timezonefinder import TimezoneFinder
 from geopy.geocoders import Nominatim
 
 st.set_page_config(page_title="Sélection du lieu", layout="wide")
-st.title("Claire = prout")
+st.title("☀️ Où voulez vous voir la belle lumière de 19h42 ? ☀️")
 
 geolocator = Nominatim(user_agent="sun_position_app")
 tf = TimezoneFinder()
