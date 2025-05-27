@@ -27,5 +27,5 @@ if st.button("✅ Confirmer cette date"):
     st.session_state.date = selected_date
     st.session_state.confirmed_date = True
     st.success(f"Date sélectionnée : {selected_date.strftime('%d %B %Y')}")
-    st.page_link("Resultats", label="➡️ Voir l’heure où le soleil atteint la hauteur", icon="🌞")
+    st.page_link("pages/Resultats.py", label="➡️ Voir l’heure où le soleil atteint la hauteur", icon="🌞")
 
