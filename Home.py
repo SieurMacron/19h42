@@ -29,9 +29,6 @@ with st.container():
             st.session_state.confirmed_location = True
             st.success(f"Lieu confirmé ! Fuseau horaire : {tz}")
 
-# Si lieu confirmé, on affiche le lien vers page date
-if st.session_state.get("confirmed_location", False):
-    st.markdown('<a href="./pages/Date" target="_self">➡️ Aller à la sélection de la date</a>', unsafe_allow_html=True)
-
-else:
+# Plus de lien pour aller à Date
+if not st.session_state.get("confirmed_location", False):
     st.info("Veuillez sélectionner un lieu sur la carte et confirmer.")
