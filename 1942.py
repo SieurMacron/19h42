@@ -1,9 +1,13 @@
 import streamlit as st
+from datetime import datetime, timedelta
 from astral import LocationInfo
 from astral.sun import elevation
-from datetime import datetime, timedelta
+from timezonefinder import TimezoneFinder
 import pytz
+from streamlit_folium import st_folium
+import folium
 
+# Calcul de la hauteur du soleil à Patmos
 @st.cache_data
 def hauteur_soleil_patmos():
     patmos = LocationInfo("Patmos", "Greece", "Europe/Athens", 37.3236, 26.5401)
@@ -28,26 +32,41 @@ def heures_qui_atteignent_hauteur(lat, lon, date, hauteur_cible, timezone_str):
 
     return heures_valides
 
-# --- Interface Streamlit ---
+# --- Interface utilisateur ---
 st.title("À quelle heure le soleil atteint une certaine hauteur ?")
-
-st.markdown("La hauteur de référence est celle atteinte à **Patmos** (Grèce), le 1er août à 19h42.")
 hauteur_ref = hauteur_soleil_patmos()
-st.write(f"Hauteur de référence : **{hauteur_ref:.2f}°**")
+st.markdown(f"🌞 Hauteur de référence (Patmos, 1er août à 19h42) : **{hauteur_ref:.2f}°**")
 
-latitude = st.number_input("Latitude", value=48.8566)
-longitude = st.number_input("Longitude", value=2.3522)
-date_input = st.date_input("Date", value=datetime.now().date())
-timezone_str = st.text_input("Fuseau horaire (ex: Europe/Paris)", value="Europe/Paris")
+st.markdown("### 🌍 Sélectionnez un lieu sur la carte")
 
-if st.button("Calculer"):
-    try:
-        heures = heures_qui_atteignent_hauteur(latitude, longitude, date_input, hauteur_ref, timezone_str)
-        if heures:
-            st.success("Heures où le soleil atteint la hauteur de référence :")
-            for i, h in enumerate(heures, 1):
-                st.write(f"**{i}.** {h.strftime('%H:%M')} ({timezone_str})")
-        else:
-            st.warning("Le soleil n'atteint pas cette hauteur ce jour-là à ce lieu.")
-    except Exception as e:
-        st.error(f"Erreur : {e}")
+# Carte interactive centrée sur l’Europe
+m = folium.Map(location=[48.85, 2.35], zoom_start=3)
+map_data = st_folium(m, height=400, width=700)
+
+if map_data and map_data.get("last_clicked"):
+    lat = map_data["last_clicked"]["lat"]
+    lon = map_data["last_clicked"]["lng"]
+
+    # Trouver automatiquement le fuseau horaire
+    tf = TimezoneFinder()
+    timezone = tf.timezone_at(lat=lat, lng=lon)
+
+    st.success(f"Coordonnées sélectionnées : lat={lat:.4f}, lon={lon:.4f}")
+    st.success(f"Fuseau horaire détecté : {timezone}")
+
+    date_input = st.date_input("📅 Sélectionnez une date", value=datetime.now().date())
+
+    if st.button("Calculer l’heure à laquelle le soleil atteint cette hauteur"):
+        try:
+            heures = heures_qui_atteignent_hauteur(lat, lon, date_input, hauteur_ref, timezone)
+            if heures:
+                st.success("🕒 Heures où le soleil atteint la hauteur :")
+                for i, h in enumerate(heures, 1):
+                    st.write(f"**{i}.** {h.strftime('%H:%M')} ({timezone})")
+            else:
+                st.warning("Le soleil n’atteint pas cette hauteur ce jour-là à ce lieu.")
+        except Exception as e:
+            st.error(f"Erreur : {e}")
+else:
+    st.info("Cliquez sur la carte pour choisir une position.")
+
