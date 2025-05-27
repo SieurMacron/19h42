@@ -8,10 +8,11 @@ if "page" not in st.session_state:
 page = st.radio("Navigation", ["Home", "Date", "Résultats"], index=["Home", "Date", "Résultats"].index(st.session_state.page), horizontal=True)
 st.session_state.page = page
 
-# Inclusion des pages
-if page == "Home":
-    import home
-elif page == "Date":
-    import date_page
-elif page == "Résultats":
-    import resultats
+page_files = {
+    "Home": "home.py",
+    "Date": "date_page.py",
+    "Résultats": "resultats.py"
+}
+with open(page_files[page], "r", encoding="utf-8") as f:
+    code = f.read()
+    exec(code, globals())
