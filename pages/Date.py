@@ -1,5 +1,12 @@
 import streamlit as st
 from datetime import date
+import locale
+
+# Essayer de mettre la locale française
+try:
+    locale.setlocale(locale.LC_TIME, "fr_FR.UTF-8")
+except locale.Error:
+    pass
 
 st.set_page_config(page_title="Sélection de la date")
 
@@ -17,8 +24,8 @@ selected_date = st.date_input("Choisissez une date", value=date.today())
 if st.button("✅ Confirmer la date"):
     st.session_state.selected_date = selected_date
     st.session_state.confirmed_date = True
-    st.success(f"Date confirmée : {selected_date}")
+    # Affichage au format jour/mois/année
+    st.success(f"Date confirmée : {selected_date.strftime('%d/%m/%Y')}")
 
-# Plus de lien vers Resultats
 if not st.session_state.get("confirmed_date", False):
     st.info("Veuillez sélectionner une date et confirmer.")
