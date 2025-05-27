@@ -6,7 +6,7 @@ import pytz
 import time
 
 st.set_page_config(page_title="Compte à rebours solaire", layout="centered")
-st.title("⏳ Compte à rebours jusqu'à la hauteur solaire cible")
+st.title("⏳ Compte à rebours jusqu'à la hauteur solaire")
 
 # Vérifier les données requises
 if not st.session_state.get("confirmed_location"):
