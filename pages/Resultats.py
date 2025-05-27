@@ -5,7 +5,7 @@ from astral.sun import elevation
 import pytz
 
 st.set_page_config(page_title="Résultat", layout="centered")
-st.title("🌞 La belle lumière de 19h42 sera visible à... 🌞")
+st.title("🌞 La belle lumière de 19h42 sera visible... 🌞")
 
 if not (st.session_state.get("confirmed_location") and st.session_state.get("confirmed_date")):
     st.warning("Lieu et date doivent être confirmés avant d'accéder à cette page.")
