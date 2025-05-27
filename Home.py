@@ -3,7 +3,11 @@ import streamlit_folium
 from folium import Map
 from folium.plugins import MousePosition
 from timezonefinder import TimezoneFinder
+import time
 
+
+with st.spinner('Chargement du site, patience... 🌅'):
+    time.sleep(2)  # simule un chargement
 
 st.set_page_config(page_title="Sélection du lieu", layout="wide")
 st.title("🌍 Sélectionnez un lieu sur la carte")
