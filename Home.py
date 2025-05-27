@@ -5,20 +5,6 @@ from folium.plugins import MousePosition
 from timezonefinder import TimezoneFinder
 
 
-
-st.markdown(
-    """
-    <style>
-    .stApp {
-        background: linear-gradient(135deg, #FF5F6D, #FFC371);  /* dégradé rouge-orange-jaune */
-        color: #3b1a1a;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True
-)
-
-
 st.set_page_config(page_title="Sélection du lieu", layout="wide")
 st.title("🌍 Sélectionnez un lieu sur la carte")
 
