@@ -18,7 +18,7 @@ st.markdown("---")
 
 selected_date = st.date_input(
     "📆 Choisissez une date",
-    min_value=date.today(),
+    min_value=date(1990, 12, 31),
     max_value=date(2100, 12, 31),
     value=date.today()
 )
