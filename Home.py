@@ -4,6 +4,43 @@ from folium import Map
 from folium.plugins import MousePosition
 from timezonefinder import TimezoneFinder
 
+
+
+st.markdown(
+    """
+    <style>
+    .stApp {
+        background: linear-gradient(135deg, #FF5F6D, #FFC371);  /* dégradé rouge-orange-jaune */
+        color: #3b1a1a;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
+st.markdown(
+    """
+    <style>
+    div.stButton > button:first-child {
+        background-color: #FF5F6D;
+        color: white;
+        border-radius: 8px;
+        height: 3em;
+        width: 100%;
+        font-size: 18px;
+        font-weight: bold;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        transition: background-color 0.3s ease;
+    }
+    div.stButton > button:first-child:hover {
+        background-color: #FFC371;
+        color: #3b1a1a;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
 st.set_page_config(page_title="Sélection du lieu", layout="wide")
 st.title("🌍 Sélectionnez un lieu sur la carte")
 
