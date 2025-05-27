@@ -12,7 +12,7 @@ geolocator = Nominatim(user_agent="sun_position_app")
 tf = TimezoneFinder()
 
 # Détection par recherche texte
-st.subheader("🔎 Rechercher un lieu")
+st.subheader("🔎 Recherchez un lieu")
 place_name = st.text_input("Entrez un nom de lieu (ville, pays, etc.)")
 
 if place_name:
