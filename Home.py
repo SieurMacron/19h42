@@ -31,6 +31,7 @@ with st.container():
 
 # Si lieu confirmé, on affiche le lien vers page date
 if st.session_state.get("confirmed_location", False):
-    st.markdown("[➡️ Aller à la sélection de la date](./pages/Date)")
+    st.markdown('<a href="./pages/Date" target="_self">➡️ Aller à la sélection de la date</a>', unsafe_allow_html=True)
+
 else:
     st.info("Veuillez sélectionner un lieu sur la carte et confirmer.")
