@@ -1,6 +1,5 @@
 streamlit
-astral
-pytz
-timezonefinder
 streamlit-folium
-folium
+timezonefinder
+pytz
+astral
