@@ -10,7 +10,6 @@ st.title("🌞 Heure où le soleil atteint une hauteur spécifique")
 # Vérification des données nécessaires
 if not (st.session_state.get("confirmed_location") and st.session_state.get("confirmed_date")):
     st.warning("Lieu et date doivent être confirmés avant d'accéder à cette page.")
-    st.page_link("Home", label="⬅️ Revenir à la sélection du lieu")
     st.stop()
 
 # Hauteur du soleil à Patmos le 1er août à 19h42
@@ -46,7 +45,6 @@ lat = st.session_state.lat
 lon = st.session_state.lon
 timezone = st.session_state.timezone
 date_val = st.session_state.selected_date
-
 
 heures = heure_qui_atteint_hauteur(lat, lon, date_val, hauteur_ref, timezone)
 
