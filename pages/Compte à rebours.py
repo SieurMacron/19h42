@@ -37,7 +37,8 @@ position = st.empty()
 html(get_position_code, height=0)
 
 # 2. Traitement du message
-location_data = st.experimental_get_query_params().get("location_data")
+location_data = st.query_params.get("location_data")
+
 
 if not location_data:
     # Écoute du message postMessage via JS
