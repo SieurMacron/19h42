@@ -45,7 +45,8 @@ def heure_qui_atteint_hauteur(lat, lon, date, hauteur_cible, timezone_str):
 lat = st.session_state.lat
 lon = st.session_state.lon
 timezone = st.session_state.timezone
-date_val = st.session_state.date
+date_val = st.session_state.selected_date
+
 
 heures = heure_qui_atteint_hauteur(lat, lon, date_val, hauteur_ref, timezone)
 
