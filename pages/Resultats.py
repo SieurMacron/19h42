@@ -12,7 +12,7 @@ if not (st.session_state.get("confirmed_location") and st.session_state.get("con
     st.warning("Lieu et date doivent être confirmés avant d'accéder à cette page.")
     st.stop()
 
-# Hauteur du soleil à Patmos le 1er août à 19h42
+# Hauteur du soleil à Patmos le 28 juin à 19h42
 def hauteur_soleil_patmos():
     patmos = LocationInfo("Patmos", "Greece", "Europe/Athens", 37.3236, 26.5401)
     tz = pytz.timezone(patmos.timezone)
