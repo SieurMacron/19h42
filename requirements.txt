@@ -1,3 +1,6 @@
 streamlit
 astral
 pytz
+timezonefinder
+streamlit-folium
+folium
