@@ -39,9 +39,13 @@ st.markdown(f"🌞 Hauteur de référence (Patmos, 1er août à 19h42) : **{haut
 
 st.markdown("### 🌍 Sélectionnez un lieu sur la carte")
 
-# Carte interactive centrée sur l’Europe
+# Crée une carte avec pop-up lat/lon au clic
 m = folium.Map(location=[48.85, 2.35], zoom_start=3)
+m.add_child(folium.LatLngPopup())  # <-- Active le clic et la récupération de coordonnées
+
+# Affiche la carte
 map_data = st_folium(m, height=400, width=700)
+
 
 if map_data and map_data.get("last_clicked"):
     lat = map_data["last_clicked"]["lat"]
